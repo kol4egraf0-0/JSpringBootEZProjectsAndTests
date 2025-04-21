@@ -50,4 +50,5 @@ public class RestCoffeeController {
     void deleteCoffee(@PathVariable String id){
         coffeeRepository.deleteById(id);
     }
+
 }

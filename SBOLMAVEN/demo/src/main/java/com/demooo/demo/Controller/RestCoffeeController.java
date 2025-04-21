@@ -1,6 +1,5 @@
 package com.demooo.demo.Controller;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
@@ -24,13 +23,6 @@ public class RestCoffeeController {
 
     public RestCoffeeController(CoffeeRepository coffeeRepository){
         this.coffeeRepository = coffeeRepository;
-
-        this.coffeeRepository.saveAll(List.of(
-            new Coffee("Capuccino"),
-            new Coffee("Italiano"),
-            new Coffee("Bonucci"),
-            new Coffee("Cacao")
-        ));
     }
     @GetMapping
     Iterable<Coffee> getCoffees(){
@@ -49,9 +41,9 @@ public class RestCoffeeController {
 
     @PutMapping("/{id}")
     ResponseEntity<Coffee> putCoffee(@PathVariable String id, @RequestBody Coffee coffee){
-        return (!coffeeRepository.existsById(id))
-                ? new ResponseEntity<>(coffeeRepository.save(coffee), HttpStatus.CREATED) :
-                new ResponseEntity<>(coffeeRepository.save(coffee), HttpStatus.OK);
+        return (coffeeRepository.existsById(id))
+                ? new ResponseEntity<>(coffeeRepository.save(coffee), HttpStatus.OK) :
+                new ResponseEntity<>(coffeeRepository.save(coffee), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")

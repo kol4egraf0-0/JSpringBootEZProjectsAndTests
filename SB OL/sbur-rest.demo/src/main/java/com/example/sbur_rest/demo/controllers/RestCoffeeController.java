@@ -65,7 +65,7 @@ import com.example.sbur_rest.demo.models.Coffee;
         }
         return (coffeeIndex == -1) ?
                         new ResponseEntity<>(postCoffee(coffee), HttpStatus.CREATED) : 
-                        new ResponseEntity<>(postCoffee(coffee), HttpStatus.CREATED);
+                        new ResponseEntity<>(postCoffee(coffee), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

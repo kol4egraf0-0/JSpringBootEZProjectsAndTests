@@ -1,14 +1,17 @@
-package com.example.sbur_rest.demo.models;
-
+package com.demooo.demo.Entity;
 import java.util.UUID;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+@Entity     
 public class Coffee {
+    @Id
     private String id;
     private String name;
 
-   
-    public Coffee() {
-        
+    public Coffee(){
+
     }
 
     public Coffee(String id, String name) {

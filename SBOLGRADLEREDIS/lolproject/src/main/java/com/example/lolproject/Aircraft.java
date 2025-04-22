@@ -3,10 +3,8 @@ package com.example.lolproject;
 import java.time.Instant;
 
 import org.springframework.data.annotation.Id;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -37,6 +35,8 @@ public class Aircraft {
     private Instant posUpdateTime;
     @JsonProperty("bds40_seen_time")
     private Instant bds40SeenTime;
+
+    public Aircraft() {}
 
     public String getLastSeenTime() {
         return lastSeenTime.toString();

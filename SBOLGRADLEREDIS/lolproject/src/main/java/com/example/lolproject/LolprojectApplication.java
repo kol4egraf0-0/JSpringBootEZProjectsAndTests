@@ -11,6 +11,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 @SpringBootApplication
 public class LolprojectApplication {
+	/*
     @Bean
 	public RedisOperations<String, Aircraft>
 	redisOperations(RedisConnectionFactory factory) {
@@ -23,9 +24,9 @@ public class LolprojectApplication {
 		template.setKeySerializer(new StringRedisSerializer());
 
 		return template;
-	}
+	 */
 	public static void main(String[] args) {
 		SpringApplication.run(LolprojectApplication.class, args);
 	}
-
 }
+

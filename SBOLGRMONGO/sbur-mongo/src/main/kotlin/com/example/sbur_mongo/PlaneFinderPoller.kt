@@ -19,11 +19,11 @@ class PlaneFinderPoller(private val reposritory: AircraftReposritory) {
         client.get()
             .retrieve()
             .bodyToFlux<Aircraft>()
-            .filter {!it.reg.isNullOrBlank()}
+            .filter {!it.reg.isNullOrEmpty()}
             .toStream()
             .forEach{reposritory.save(it)}
 
-        println("--- All Samoletes")
+        println("-----All Samoletes------")
         reposritory.findAll().forEach{println(it)}
     }
 }

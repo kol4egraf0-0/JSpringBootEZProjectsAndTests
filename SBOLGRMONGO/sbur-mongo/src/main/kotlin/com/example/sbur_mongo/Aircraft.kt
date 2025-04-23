@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document
 import java.time.Instant
 
 
-@Document
+@Document //для монго
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class Aircraft(
     @Id val id: String,

@@ -6,7 +6,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.4.2</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath/>
 	</parent>
 	<groupId>com.thehecklers</groupId>
 	<artifactId>planefinder</artifactId>
@@ -15,8 +15,8 @@
 	<description>Data feed for Spring Boot Up and Running</description>
 
 	<properties>
-		<java.version>11</java.version>
-		<spring-cloud.version>2020.0.6</spring-cloud.version>
+		<java.version>17</java.version>
+		<spring-cloud.version>2023.0.5</spring-cloud.version>
 	</properties>
 	<dependencyManagement>
 		<dependencies>

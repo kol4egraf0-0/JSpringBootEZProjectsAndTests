@@ -6,25 +6,36 @@
   <meta http-equiv="Content-Type" content="text/html" charset="UTF-8"/>
 </head>
 <body>
+<script type="text/javascript">
+  window.onload = setupRefresh;
+
+  function setupRefresh(){
+    setTimeout("refreshPage();", 5000);
+  }
+
+  function refreshPage(){
+    window.location = location.href;
+  }
+</script>
 <div class="positionsList" th:unless="${#lists.isEmpty(currentPositions)}">
   <h2>Текущие позиции Самолетов</h2>
 
   <table>
     <thead>
     <tr>
-      <th>Call Sing</th>
-      <th>Squawk</th>
-      <th>AC Reg</th>
-      <th>Flight #</th>
-      <th>Route</th>
-      <th>AC Type</th>
-      <th>Altitude</th>
-      <th>Heading</th>
-      <th>Speed</th>
-      <th>Vert Rate</th>
-      <th>Latitude</th>
-      <th>Longitude</th>
-      <th>Last Seen</th>
+      <th>Call Sing     </th>
+      <th>Squawk        </th>
+      <th>AC Reg        </th>
+      <th>Flight #      </th>
+      <th>Route         </th>
+      <th>AC Type       </th>
+      <th>Altitude      </th>
+      <th>Heading       </th>
+      <th>Speed         </th>
+      <th>Vert Rate     </th>
+      <th>Latitude      </th>
+      <th>Longitude     </th>
+      <th>Last Seen     </th>
       <th></th>
     </tr>
     </thead>

@@ -76,12 +76,8 @@ public class PlaneFinderService {
                 40000, 65, 440,
                 39.8412964, -105.0048267);
 
-        // хз где т летит
-        var ac4 = new Aircraft("SAL002", "N54321", "SAL002", "LJ",
-                40000, 65, 440,
-                39.8412964, -105.0048267);
 
-        return repo.saveAll(List.of(ac1, ac2, ac4));
+        return repo.saveAll(List.of(ac1, ac2, ac3));
     }
 }
 

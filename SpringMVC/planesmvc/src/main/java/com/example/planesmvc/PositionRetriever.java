@@ -11,10 +11,10 @@ import java.util.function.Consumer;
 @Configuration
 public class PositionRetriever {
     private final AircraftRepository repo;
-
     @Bean
     Consumer<List<Aircraft>> retrieveAircraftPositions() {
      return acList -> {
+         System.out.println("Received aircraft: " + acList.size());
        repo.deleteAll();
 
        repo.saveAll(acList);

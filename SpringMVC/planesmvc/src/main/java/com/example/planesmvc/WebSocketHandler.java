@@ -1,8 +1,10 @@
 package com.example.planesmvc;
 
+import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
@@ -14,13 +16,10 @@ import java.util.List;
 @RequiredArgsConstructor
 @Component
 public class WebSocketHandler extends TextWebSocketHandler {
+    @Getter
     private final List<WebSocketSession> sessionList = new ArrayList<>();
     @NonNull
     private final AircraftRepository repository;
-
-    public List<WebSocketSession> getSessionList() {
-        return sessionList;
-    }
 
     @Override
     public void afterConnectionEstablished(@NonNull WebSocketSession session) throws Exception {
@@ -45,5 +44,12 @@ public class WebSocketHandler extends TextWebSocketHandler {
         catch(Exception e){
             System.out.println("Exception handling message: " + e.getLocalizedMessage());
         }
+    }
+    @Override
+    public void afterConnectionClosed(WebSocketSession session, CloseStatus status)
+            throws Exception {
+        sessionList.remove(session);
+        System.out.println("Connection closed by " + session.toString() +
+                " @ " + Instant.now().toString());
     }
 }

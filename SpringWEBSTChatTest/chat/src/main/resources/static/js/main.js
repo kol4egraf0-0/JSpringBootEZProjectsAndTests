@@ -21,9 +21,9 @@ function connect(event){
 
     if(username){
         usernamePage.classList.add('hidden');
-        chatPage.classList.add('hidden');
+        chatPage.classList.remove('hidden');
 
-        var socket = new SockJs('/ws');
+        var socket = new SockJS('/ws');
         stompClient = Stomp.over(socket);
 
         stompClient.connect({}, onConnected, onError);
@@ -32,7 +32,7 @@ function connect(event){
 }
 
 function onConnected(){
-    stompClient.subscribe('/topic/public', onMessageRecieved);
+    stompClient.subscribe('/topic/public', onMessageReceived);
 
     stompClient.send("/app/chat.addUser",{}, JSON.stringify(
         {sender:username,

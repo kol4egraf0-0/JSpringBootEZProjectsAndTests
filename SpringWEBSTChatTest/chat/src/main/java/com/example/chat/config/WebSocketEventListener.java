@@ -19,7 +19,6 @@ public class WebSocketEventListener {
 
     @EventListener
     public void handleWebSocketDisconnectListener(SessionDisconnectEvent event) {
-        //.
         StompHeaderAccessor accessor = StompHeaderAccessor.wrap(event.getMessage());
         String username = (String) accessor.getSessionAttributes().get("username");
         if(username != null) {

@@ -12,20 +12,12 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class PositionController {
     @NonNull
     private final AircraftRepository repository;
+    private final PositionRetriever retriever;
     private WebClient client =
             WebClient.create("http://localhost:7634/aircraft");
 
     @GetMapping("/aircraft")
-    public Iterable<Aircraft> getCurrentAircraftPositions(Model model) {
-        repository.deleteAll();
-
-        client.get()
-                .retrieve()
-                .bodyToFlux(Aircraft.class)
-                .filter(plane -> !plane.getReg().isEmpty())
-                .toStream()
-                .forEach(repository::save);
-
-        return repository.findAll();
+    public Iterable<Aircraft> getCurrentAircraftPositions() {
+        return retriever.retrieveAircraftPositions();
     }
 }

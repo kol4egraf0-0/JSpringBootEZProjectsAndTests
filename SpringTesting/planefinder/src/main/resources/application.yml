@@ -3,11 +3,13 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: https://<wtf>.oktapreview.com/oauth2/default
+          issuer-uri: https://key.region.auth0.com/
   rsocket:
     server:
       port: 7635
 
 server:
   port: 7634
-
+logging:
+  level:
+    org.springframework.security: DEBUG

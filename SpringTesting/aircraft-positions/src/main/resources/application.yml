@@ -1,0 +1,11 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          okta:
+            client-id: LOL
+            client-secret: ppasword
+        provider:
+          okta:
+            issuer-uri: https://wtf.oktapreview.com/oauth2/default

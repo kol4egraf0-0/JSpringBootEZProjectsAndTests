@@ -8,7 +8,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Component
 public class PositionRetriever {
     private final AircraftRepository repository;
-    private final WebClient client = WebClient.create("http://localhost:7634");
+    private final WebClient client;
 
     Iterable<Aircraft> retrieveAircraftPositions() {
         repository.deleteAll();

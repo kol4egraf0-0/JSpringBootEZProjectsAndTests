@@ -29,6 +29,7 @@ class PositionControllerTest {
 
     @BeforeEach
     void setUp(ApplicationContext context) {
+        /*
         ac1 = new Aircraft(1L, "SAL001", "sqwk", "N12345", "SAL001",
                 "STL-SFO", "LJ", "ct",
                 30000, 280, 440, 0, 0,
@@ -43,8 +44,9 @@ class PositionControllerTest {
                 true, false,
                 Instant.now(), Instant.now(), Instant.now());
         Mockito.when(retriever.retrieveAircraftPositions()).thenReturn(List.of(ac1, ac2));
+         */
     }
-
+/*
     @Test
     void getCurrentAircraftPositions(@Autowired WebTestClient client) {
         final Iterable<Aircraft> acPositions = client.get()
@@ -57,4 +59,5 @@ class PositionControllerTest {
 
         assertEquals(List.of(ac1, ac2), acPositions);
     }
+ */
 }

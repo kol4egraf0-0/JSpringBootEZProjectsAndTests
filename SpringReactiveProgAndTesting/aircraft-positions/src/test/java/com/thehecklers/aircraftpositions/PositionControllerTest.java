@@ -14,6 +14,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Hooks;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
+import reactor.tools.agent.ReactorDebugAgent;
 
 import java.time.Instant;
 import java.util.List;
@@ -90,10 +91,18 @@ class PositionControllerTest {
         //        reactor.core.publisher.Flux.checkpoint(Flux.java:3277)
         //Mockito.when(service.getAllAircraft()).thenReturn(Flux.just(ac1, ac2, ac3)
         //        .checkpoint("все ок", true)
-        //        .concatWith(Flux.error(new Throwable("Нет ответа"))) //умышленная ошибка, тест не ожидает ёё появления
+        //        .concatWith(Flux.error(new Throwable("Нет ответа")))
         //        .checkpoint("чот не ок", true)
         //);
-        
+        //реактор-тулс!
+        //java.lang.Throwable: Нет ответа
+        //	at com.thehecklers.aircraftpositions.PositionControllerTest.setUp(PositionControllerTest.java:98) ~[test-classes/:na]
+        //	Suppressed: reactor.core.publisher.FluxOnAssembly$OnAssemblyException:
+        //Assembly trace from producer [reactor.core.publisher.FluxConcatArray] :
+        ReactorDebugAgent.init();//быстрее хукса
+        Mockito.when(service.getAllAircraft()).thenReturn(Flux.just(ac1, ac2, ac3)
+                .concatWith(Flux.error(new Throwable("Нет ответа"))) //умышленная ошибка, тест не ожидает ёё появления
+        );
         Mockito.when(service.getAircraftById(1L)).thenReturn(Mono.just(ac1));
         Mockito.when(service.getAircraftById(2L)).thenReturn(Mono.just(ac2));
         Mockito.when(service.getAircraftById(3L)).thenReturn(Mono.just(ac3));

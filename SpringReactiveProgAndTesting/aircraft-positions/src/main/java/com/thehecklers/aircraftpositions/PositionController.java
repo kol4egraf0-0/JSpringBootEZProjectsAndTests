@@ -11,27 +11,20 @@ import reactor.core.publisher.Flux;
 
 @Controller
 public class PositionController {
-    private final AircraftRepository repository;
+    private final PositionService service;
     private final RSocketRequester requester;
     private WebClient client =
             WebClient.create("http://localhost:7634/aircraft");
 
-    public PositionController(AircraftRepository repository, RSocketRequester requester) {
-        this.repository = repository;
+    public PositionController(PositionService service, RSocketRequester requester) {
+        this.service = service;
         this.requester = requester;
     }
 
     // HTTP endpoint, HTTP requester (previously created)
     @GetMapping("/aircraft")
     public String getCurrentAircraftPositions(Model model) {
-        Flux<Aircraft> aircraftFlux = repository.deleteAll()
-                .thenMany(client.get()
-                        .retrieve()
-                        .bodyToFlux(Aircraft.class)
-                        .filter(plane -> !plane.getReg().isEmpty())
-                        .flatMap(repository::save));
-
-        model.addAttribute("currentPositions", aircraftFlux);
+        model.addAttribute("currentpositions", service.getAllAircraft());
         return "positions";
     }
 
@@ -40,7 +33,7 @@ public class PositionController {
     @GetMapping(value = "/acstream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<Aircraft> getCurrentACPositionsStream() {
         return requester.route("acstream")
-                .data("Requesting aircraft positions")
+                .data("Ищем позиции самолетов")
                 .retrieveFlux(Aircraft.class);
     }
 }

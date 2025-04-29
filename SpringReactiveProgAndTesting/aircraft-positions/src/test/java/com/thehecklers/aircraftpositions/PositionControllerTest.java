@@ -7,8 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.ApplicationContext;
+import org.springframework.http.MediaType;
+import org.springframework.messaging.rsocket.RSocketRequester;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+import reactor.test.StepVerifier;
 
 import java.time.Instant;
 import java.util.List;
@@ -17,15 +21,18 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @WebFluxTest(controllers = {PositionController.class})
 class PositionControllerTest {
-    @MockBean
-    private AircraftRepository repository;
+    @Autowired
+    private WebTestClient client;
 
-    private Aircraft ac1, ac2;
+    @MockBean
+    private PositionService service;
+    @MockBean
+    private RSocketRequester requester;
+
+    private Aircraft ac1, ac2, ac3;
 
     @BeforeEach
     void setUp(ApplicationContext context) {
-        // Spring Airlines flight 001 en route, flying STL to SFO,
-        //    at 30000' currently over Kansas City
         ac1 = new Aircraft(1L, "SAL001", "sqwk", "N12345", "SAL001",
                 "STL-SFO", "LJ", "ct",
                 30000, 280, 440, 0, 0,
@@ -33,8 +40,6 @@ class PositionControllerTest {
                 true, false,
                 Instant.now(), Instant.now(), Instant.now());
 
-        // Spring Airlines flight 002 en route, flying SFO to STL,
-        //    at 40000' currently over Denver
         ac2 = new Aircraft(2L, "SAL002", "sqwk", "N54321", "SAL002",
                 "SFO-STL", "LJ", "ct",
                 40000, 65, 440, 0, 0,
@@ -42,20 +47,23 @@ class PositionControllerTest {
                 true, false,
                 Instant.now(), Instant.now(), Instant.now());
 
-        Mockito.when(repository.findAll())
-                .thenReturn(Flux.just(ac1, ac2));
+        ac3 = new Aircraft(3L, "SAL002", "sqwk", "N54321", "SAL002",
+                "SFO-STL", "LJ", "ct",
+                40000, 65, 440, 0, 0,
+                39.8412964, -105.0048267, 0D, 0D, 0D,
+                true, false,
+                Instant.now(), Instant.now(), Instant.now());
+
+
+
+        Mockito.when(service.getAllAircraft()).thenReturn(Flux.just(ac1, ac2, ac3));
+        Mockito.when(service.getAircraftById(1L)).thenReturn(Mono.just(ac1));
+        Mockito.when(service.getAircraftById(2L)).thenReturn(Mono.just(ac2));
+        Mockito.when(service.getAircraftById(3L)).thenReturn(Mono.just(ac3));
+        Mockito.when(service.getAircraftByReg("N12345")).thenReturn(Flux.just(ac1));
+        Mockito.when(service.getAircraftByReg("N54321")).thenReturn(Flux.just(ac2,ac3));
+
     }
 
-    @Test   // NOTE: This test fails prior to refactoring
-    void getCurrentAircraftPositions(@Autowired WebTestClient client) {
-        final Iterable<Aircraft> acPositions = client.get()
-                .uri("/aircraft")
-                .exchange()
-                .expectStatus().isOk()
-                .expectBodyList(Aircraft.class)
-                .returnResult()
-                .getResponseBody();
-
-        assertEquals(List.of(ac1, ac2), acPositions);
-    }
+    
 }

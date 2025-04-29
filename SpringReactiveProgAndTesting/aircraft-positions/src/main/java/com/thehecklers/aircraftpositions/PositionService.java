@@ -29,7 +29,7 @@ public class PositionService {
         return repo.findById(id);
     }
 
-    /*public Flux<Aircraft> getAircraftByReg(String reg) {
+    public Flux<Aircraft> getAircraftByReg(String reg) {
         return repo.findAircraftByReg(reg);
-    }*/
+    }
 }

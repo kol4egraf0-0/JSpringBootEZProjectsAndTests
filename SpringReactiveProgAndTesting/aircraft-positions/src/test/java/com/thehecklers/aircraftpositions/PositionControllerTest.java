@@ -79,4 +79,17 @@ class PositionControllerTest {
                 .expectNext(ac3)
                 .verifyComplete();
     }
+
+    @Test
+    void getAircraftById() {
+        StepVerifier.create(client.get()
+                .uri("/acpos/search?id=1")
+                .exchange()
+                .expectStatus().isOk()
+                .expectHeader().contentType(MediaType.APPLICATION_JSON)
+                .returnResult(Aircraft.class)
+                .getResponseBody())
+                .expectNext(ac1)
+                .verifyComplete();
+    }
 }

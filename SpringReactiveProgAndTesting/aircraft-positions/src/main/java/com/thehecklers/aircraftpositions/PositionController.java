@@ -16,9 +16,9 @@ public class PositionController {
     private WebClient client =
             WebClient.create("http://localhost:7634/aircraft");
 
-    public PositionController(AircraftRepository repository, RSocketRequester.Builder builder) {
+    public PositionController(AircraftRepository repository, RSocketRequester requester) {
         this.repository = repository;
-        this.requester = builder.tcp("localhost", 7635);
+        this.requester = requester;
     }
 
     // HTTP endpoint, HTTP requester (previously created)

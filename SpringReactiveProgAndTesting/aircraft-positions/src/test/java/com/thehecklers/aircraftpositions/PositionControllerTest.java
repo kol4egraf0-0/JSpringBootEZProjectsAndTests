@@ -65,5 +65,18 @@ class PositionControllerTest {
 
     }
 
-    
+    @Test
+    void getAllACPositions() {
+        StepVerifier.create(client.get()
+                        .uri("/acpos")
+                        .exchange()
+                        .expectStatus().isOk()
+                        .expectHeader().contentType(MediaType.APPLICATION_JSON)
+                        .returnResult(Aircraft.class)
+                        .getResponseBody())
+                .expectNext(ac1)
+                .expectNext(ac2)
+                .expectNext(ac3)
+                .verifyComplete();
+    }
 }

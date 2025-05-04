@@ -42,7 +42,7 @@ public class JwtService {
         return buildToken(extraClaims, userDetails, jwtExpiration);
     }
 
-    private long getExpirationTime() {
+    public long getExpirationTime() {
         return jwtExpiration;
     }
 

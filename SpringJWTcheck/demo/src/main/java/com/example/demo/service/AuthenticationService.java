@@ -76,7 +76,7 @@ public class AuthenticationService {
         }
     }
 
-    public void resendVerificationEmail(String email) {
+    public void resendVerificationEmail(String email) { //реотпавка
         Optional<User> optionalUser = userRepository.findByEmail(email);
         if(optionalUser.isPresent()) {
             User user = optionalUser.get();

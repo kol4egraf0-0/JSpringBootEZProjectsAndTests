@@ -37,7 +37,7 @@ public class AuthenticationService {
     }
 
     public User signUp(RegsiterUserDto input) { //вход
-        User user = new User(input.getUsername(), passwordEncoder.encode(input.getPassword()), input.getEmail());
+        User user = new User(input.getUsername(), input.getEmail(), passwordEncoder.encode(input.getPassword()));
         user.setVerificationCode(generateVerificationCode());
         user.setVerificationCodeExpiresAt(LocalDateTime.now().plusMinutes(15));
         user.setEnabled(false);
@@ -109,9 +109,23 @@ public class AuthenticationService {
                 + "</body>"
                 + "</html>";
         try {
-            emailService.sendVerificationEmail(user.getEmail(), subject, htmlMessage);
+            System.out.println("[INFO] Attempting to send verification email to: " + user.getEmail());
+
+            emailService.sendVerificationEmail(
+                    user.getEmail(),
+                    subject,
+                    htmlMessage
+            );
+
+            System.out.println("[INFO] Verification email successfully sent to: " + user.getEmail());
+
         } catch (MessagingException e) {
+            System.out.println("[ERROR] Failed to send email to " + user.getEmail());
             e.printStackTrace();
+
+            if (e.getMessage().contains("Invalid Addresses")) {
+                System.out.println("[WARN] Invalid email format: " + user.getEmail());
+            }
         }
     }
 

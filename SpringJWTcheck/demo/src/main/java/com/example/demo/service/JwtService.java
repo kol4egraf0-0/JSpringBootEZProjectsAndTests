@@ -53,7 +53,7 @@ public class JwtService {
                 .setSubject(userDetails.getUsername()) //сабжект  обычно логин
                 .setIssuedAt(new Date(System.currentTimeMillis())) //дата создания
                 .setExpiration(new Date(System.currentTimeMillis()+expiration))//дата истека
-                .signWith(getSignInKey(), SignatureAlgorithm.ES256) //getSignInKey() возвращает секретный ключ (EC для ES256)
+                .signWith(getSignInKey(), SignatureAlgorithm.HS256) //getSignInKey() возвращает секретный ключ (EC для ES256)
                 //    - ES256 - алгоритм подписи ECDSA с SHA-256
                 .compact();
     }

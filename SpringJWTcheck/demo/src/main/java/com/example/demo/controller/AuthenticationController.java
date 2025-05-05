@@ -47,10 +47,10 @@ public class AuthenticationController {
     }
 
     @PostMapping("/resend")
-    public ResponseEntity<?> resendVerificationCode(@RequestParam String email) { //парам тк простые параметр
+    public ResponseEntity<?> resendVerificationCode(@RequestParam String email) { //парам тк простые параметр http://localhost:8080/resend?email=test@example.com
         try{
             authenticationService.resendVerificationCode(email);
-            return ResponseEntity.ok("Код верификации отправлен");
+            return ResponseEntity.ok("Код верификации отправлен еще раз");
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
